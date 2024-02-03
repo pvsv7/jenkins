@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        node {
-            label 'AGENT-1'
-        }
-    }
+    agent any      // {label 'jdk17'}              
     environment {   //environment variable that can be accessed across all stages of the pipeline
         GREETING = 'Hello Jenkins'
     }
