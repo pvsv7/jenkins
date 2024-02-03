@@ -46,7 +46,7 @@ pipeline {
             steps{
                 sh """
                     echo "Hello ${params.PERSON}"
-                    echo "build no is: $BUILD_NUMBER
+                    echo "build no is: $BUILD_NUMBER"
                     
                 """
             }
