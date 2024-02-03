@@ -8,6 +8,7 @@ pipeline {
     //     // disableConcurrentBuilds()
     //     // ansiColor('xterm')
     // }
+properties([  
     parameters {
         string(name: 'STUDENT', defaultValue: 'John', description: 'Who should I say hello to?')
         text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the STUDENT')
@@ -43,7 +44,9 @@ pipeline {
                 ]
             ]
         ]
+        ,
     }
+])    
     // build
     stages {
         stage('Travel') {
