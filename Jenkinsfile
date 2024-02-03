@@ -1,10 +1,10 @@
 properties([
-    string(name: 'STUDENT', defaultValue: 'John', description: 'Who should I say hello to?')
-    text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the STUDENT')
-    booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+    string(name: 'STUDENT', defaultValue: 'John', description: 'Who should I say hello to?'),
+    text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the STUDENT'),
+    booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value'),
     choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-    choice(name: 'DAY', choices: ['School_day', 'Holiday'], description: 'Do you want to Deploy or Rollback chrome driver')
-    password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+    choice(name: 'DAY', choices: ['School_day', 'Holiday'], description: 'Do you want to Deploy or Rollback chrome driver'),
+    password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password'),
     parameters([
         choice(name: 'ACTION', choices:[ 'Deploy', 'Rollback'] , description: 'Do you want to Deploy or Rollback chrome driver'),
         [$class: 'DynamicReferenceParameter',
