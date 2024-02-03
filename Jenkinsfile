@@ -44,7 +44,6 @@ properties([
                 ]
             ]
         ]
-        ,
     }
 ])    
     // build
