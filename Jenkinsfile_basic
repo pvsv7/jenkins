@@ -44,7 +44,7 @@ pipeline {
                 sh """
                     echo "Hello ${params.PERSON}"
                     echo "build no is: $BUILD_NUMBER"
-                    def stage_variable = "accesible within stage"
+                    def stage_variable = "3333"
                     echo htage_variable
                     
                 """
