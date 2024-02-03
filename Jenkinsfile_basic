@@ -37,9 +37,8 @@ pipeline {
             }
             steps {
                 sh """
-                    echo  "Here I wrote APPLY script"
+                    echo  "apply apply apply"
                     echo "$GREETING"
-                    #sleep 10
                 """
             }
         }
@@ -48,6 +47,9 @@ pipeline {
                 sh """
                     echo "Hello ${params.PERSON}"
                     echo "build no is: $BUILD_NUMBER"
+                    def declarative_variable = "work_within_stage" 
+                    echo "$declarative_variable"
+                    
                 """
             }
         }
