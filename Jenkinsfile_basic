@@ -6,7 +6,7 @@ pipeline {
     //     }
     
     environment { 
-        GREETING = 'Hello Jenkins'
+        GREETING = 'Hello Jenkins'   //accessible accross all stages
     }
     options {
         timeout(time: 1, unit: 'HOURS')
@@ -14,13 +14,9 @@ pipeline {
     }
     parameters {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-
         text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-
         booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-
-        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-
+        choice(name: 'ACTION', choices: ['APPLY', 'DESTROY'], description: 'select action')
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
     }
     // build
@@ -36,9 +32,12 @@ pipeline {
             }
         }
         stage('Deploy') {
+            when {
+                expression { params.ACTION == 'APPLY' }
+            }
             steps {
                 sh """
-                    echo  "Here I wrote shell script"
+                    echo  "Here I wrote APPLY script"
                     echo "$GREETING"
                     #sleep 10
                 """
@@ -57,6 +56,19 @@ pipeline {
 
                     echo "Password: ${params.PASSWORD}"
                 """
+            }
+        }
+        stage('Terraform') {
+            steps {
+                script {
+                    echo 'Here I wrote shell script'
+
+                    if (params.ACTION == "apply") {
+                        sh 'echo "terraform apply"'
+                    } else {
+                        sh 'echo "terraform destroy"'
+                    }
+                }
             }
         }
     }
