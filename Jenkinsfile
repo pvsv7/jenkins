@@ -3,11 +3,11 @@ pipeline {
     environment {   //environment variable that can be accessed across all stages of the pipeline
         GREETING = 'Hello Jenkins'
     }
-    options {
-        timeout(time: 1, unit: 'HOURS')
-        disableConcurrentBuilds()
-        ansiColor('xterm')
-    }
+    // options {
+    //     // timeout(time: 1, unit: 'HOURS')
+    //     // disableConcurrentBuilds()
+    //     // ansiColor('xterm')
+    // }
     parameters {
         string(name: 'STUDENT', defaultValue: 'John', description: 'Who should I say hello to?')
         text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the STUDENT')
