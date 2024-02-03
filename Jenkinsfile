@@ -1,57 +1,47 @@
 properties([
-    string(name: 'STUDENT', defaultValue: 'John', description: 'Who should I say hello to?'),
-    text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the STUDENT'),
-    booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value'),
-    choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-    choice(name: 'DAY', choices: ['School_day', 'Holiday'], description: 'Do you want to Deploy or Rollback chrome driver'),
-    password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password'),
     parameters([
-        choice(name: 'ACTION', choices:[ 'Deploy', 'Rollback'] , description: 'Do you want to Deploy or Rollback chrome driver'),
+        string(name: 'STUDENT', defaultValue: 'John', description: 'Who should I say hello to?'),
+        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the STUDENT'),
+        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value'),
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something'),
+        choice(name: 'DAY', choices: ['School_day', 'Holiday'], description: 'Do you want to Deploy or Rollback chrome driver'),
+        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password'),
+        choice(name: 'ACTION', choices: ['Deploy', 'Rollback'], description: 'Do you want to Deploy or Rollback chrome driver'),
         [$class: 'DynamicReferenceParameter',
             choiceType: 'ET_FORMATTED_HTML',
             omitValueField: true,
             name: 'node_chrome_tag',
-            description: 'Specify any of latest 10 chrome node image tag (https://hub.docker.com/r/selenium/node-chrome/tags)',
+            description: 'Specify any of the latest 10 chrome node image tags (https://hub.docker.com/r/selenium/node-chrome/tags)',
             referencedParameters: 'ACTION',
             script: [
                 $class: 'GroovyScript',
                 fallbackScript: [
                     classpath: [],
                     sandbox: true,
-                    script:
-                        'return[\'nothing.....\']'
+                    script: 'return[\'nothing.....\']'
                 ],
                 script: [
                     classpath: [],
                     sandbox: true,
-                    script:
-                        """
-                            if(ACTION.equals('Rollback')  ) {
-                                inputBox='<input type="hidden" name="value" value="no">'
-                            }else {
+                    script: """
+                        if (ACTION.equals('Rollback')) {
+                            inputBox='<input type="hidden" name="value" value="no">'
+                        } else {
                             inputBox = '<input type="text" name="value" value="" placeholder="node_chrome_tag">'
                         }
-                        """
-                    ]
+                    """
                 ]
             ]
-            ,
+        ]
     ])
 ])
+
 pipeline {
-    agent any      // {label 'jdk17'}              
-    environment {   //environment variable that can be accessed across all stages of the pipeline
+    agent any
+    environment {
         GREETING = 'Hello Jenkins'
     }
-    // options {
-    //     // timeout(time: 1, unit: 'HOURS')
-    //     // disableConcurrentBuilds()
-    //     // ansiColor('xterm')
-    // }
 
-        
-   
-    // build
     stages {
         stage('Travel') {
             when {
@@ -79,8 +69,8 @@ pipeline {
                 }
             }
         }
-        stage('check params & env'){
-            steps{
+        stage('check params & env') {
+            steps {
                 sh """
                     echo "Student name: ${params.STUDENT}"
                     echo "$GREETING"
@@ -92,7 +82,6 @@ pipeline {
         }
         stage('Build chrome Docker Image') {
             steps {
-           // withAWS(roleAccount:'39878787792', role:'jenkins-operation-role'){
                 dir('jenkins/hello.sh') {
                     script {
                         sh "bash day.sh ${params.STUDENT} ${params.DAY}"
@@ -101,15 +90,15 @@ pipeline {
             }
         }
     }
-    // post build
+
     post { 
         always { 
             echo 'I will always say Hello again!'
         }
         failure { 
-            echo 'this runs when pipeline is failed, used generally to send some alerts'
+            echo 'This runs when the pipeline is failed, used generally to send some alerts'
         }
-        success{
+        success {
             echo 'I will say Hello when the pipeline is successful'
         }
     }
