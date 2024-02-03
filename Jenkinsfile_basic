@@ -46,9 +46,7 @@ pipeline {
             steps{
                 sh """
                     echo "Hello ${params.PERSON}"
-                    echo "build no is: $BUILD_NUMBER"
-                    def declarative_variable = "work_within_stage" 
-                    echo "$declarative_variable"
+                    echo "build no is: $BUILD_NUMBER
                     
                 """
             }
