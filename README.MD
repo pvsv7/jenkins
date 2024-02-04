@@ -1,3 +1,3 @@
 jenkins
-new test
+ test
 first commit
